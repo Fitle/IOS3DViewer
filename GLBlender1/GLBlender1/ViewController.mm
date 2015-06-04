@@ -13,9 +13,9 @@
 @interface ViewController ()
 {
     int nbVertices;
-    float verticePositions[108];
-    float verticesTexels[72];
-    float verticesNormals[108];
+    float* verticePositions;
+    float* verticesTexels;
+    float* verticesNormals;
     float   _rotate;
 }
 
@@ -60,6 +60,10 @@
     int faces[model.faces][9];              // PTN PTN PTN
     
     extractOBJdata((char*)[path UTF8String], positions, texels, normals, faces);
+    
+    verticePositions = new float[nbVertices*3];
+    verticesNormals = new float[nbVertices*3];
+    verticesTexels= new float[nbVertices*2];
     
     for(int i=0; i<model.faces; i++)
     {
