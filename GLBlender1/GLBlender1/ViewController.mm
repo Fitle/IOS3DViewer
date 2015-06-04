@@ -7,10 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "ObjParser.h"
 #import "cube.h"
 
 @interface ViewController ()
 {
+    int nbVertices;
+    float verticePositions[108];
 }
 
 @property (strong, nonatomic) GLKBaseEffect* effect;
@@ -20,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self parseObj];
     
     // Set up context
     EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -38,6 +43,53 @@
     glEnable(GL_CULL_FACE);
 }
 
+- (void) parseObj
+{
+    char x[] = "abcd";
+    char* a;
+    a = x;
+    
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.obj" ofType:nil];
+    
+    Model model = getOBJinfo((char*)[path UTF8String]);
+    
+    nbVertices = model.vertices;
+    
+    // Model Data
+    float positions[model.positions][3];    // XYZ
+    float texels[model.texels][2];          // UV
+    float normals[model.normals][3];        // XYZ
+    int faces[model.faces][9];              // PTN PTN PTN
+    
+    extractOBJdata((char*)[path UTF8String], positions, texels, normals, faces);
+    
+    for(int i=0; i<model.faces; i++)
+    {
+        // 3
+        int vA = faces[i][0] - 1;
+        int vB = faces[i][3] - 1;
+        int vC = faces[i][6] - 1;
+        
+        // 4
+        verticePositions[9*i] = positions[vA][0] ;
+        verticePositions[9*i+1] = positions[vA][1] ;
+        verticePositions[9*i+2] = positions[vA][2];
+        
+        
+        verticePositions[9*i+3] =  positions[vB][0] ;
+        verticePositions[9*i+4] = positions[vB][1] ;
+        verticePositions[9*i+5] = positions[vB][2] ;
+        
+        verticePositions[9*i+6] =  positions[vC][0] ;
+        verticePositions[9*i+7] = positions[vC][1] ;
+        verticePositions[9*i+8] = positions[vC][2] ;
+    }
+
+
+    
+    NSLog(@"con meo");
+}
+
 - (void)createEffect
 {
     // Initialize
@@ -46,7 +98,6 @@
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    NSLog(@"drawInRect");
     glClear(GL_COLOR_BUFFER_BIT);
     
     // Prepare effect
@@ -58,11 +109,11 @@
     // 1
     // Positions
     glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, cubePositions);
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, verticePositions);
     
     // 2
     // Draw Model
-    glDrawArrays(GL_TRIANGLES, 0, cubeVertices);
+    glDrawArrays(GL_TRIANGLES, 0, nbVertices);
 }
 
 - (void)setMatrices
