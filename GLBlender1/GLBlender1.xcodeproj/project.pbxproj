@@ -19,6 +19,8 @@
 		47D29CB91B20782C00827AA8 /* ObjParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 47D29CB71B20782C00827AA8 /* ObjParser.mm */; };
 		47D29CBB1B207E2F00827AA8 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 47D29CBA1B207E2F00827AA8 /* cube.obj */; };
 		47D29CBD1B20845100827AA8 /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = 47D29CBC1B20845100827AA8 /* cube.png */; };
+		47D29CC71B2095EC00827AA8 /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 47D29CC51B2095EC00827AA8 /* avatar.jpg */; };
+		47D29CC81B2095EC00827AA8 /* avatar.obj in Resources */ = {isa = PBXBuildFile; fileRef = 47D29CC61B2095EC00827AA8 /* avatar.obj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		47D29CBA1B207E2F00827AA8 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		47D29CBC1B20845100827AA8 /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cube.png; sourceTree = "<group>"; };
 		47D29CC21B208F0500827AA8 /* cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cube.h; sourceTree = "<group>"; };
+		47D29CC51B2095EC00827AA8 /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
+		47D29CC61B2095EC00827AA8 /* avatar.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +103,8 @@
 			children = (
 				47D29C831B1F4A2600827AA8 /* AppDelegate.h */,
 				47D29C841B1F4A2600827AA8 /* AppDelegate.m */,
-				47D29CC21B208F0500827AA8 /* cube.h */,
-				47D29CBA1B207E2F00827AA8 /* cube.obj */,
-				47D29CBC1B20845100827AA8 /* cube.png */,
+				47D29CC91B2095F800827AA8 /* avatar */,
+				47D29CC41B20958500827AA8 /* cube */,
 				47D29C861B1F4A2600827AA8 /* ViewController.h */,
 				47D29C871B1F4A2600827AA8 /* ViewController.mm */,
 				47D29C891B1F4A2600827AA8 /* Main.storyboard */,
@@ -138,6 +141,25 @@
 				47D29C9A1B1F4A2600827AA8 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		47D29CC41B20958500827AA8 /* cube */ = {
+			isa = PBXGroup;
+			children = (
+				47D29CC21B208F0500827AA8 /* cube.h */,
+				47D29CBA1B207E2F00827AA8 /* cube.obj */,
+				47D29CBC1B20845100827AA8 /* cube.png */,
+			);
+			name = cube;
+			sourceTree = "<group>";
+		};
+		47D29CC91B2095F800827AA8 /* avatar */ = {
+			isa = PBXGroup;
+			children = (
+				47D29CC51B2095EC00827AA8 /* avatar.jpg */,
+				47D29CC61B2095EC00827AA8 /* avatar.obj */,
+			);
+			name = avatar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,8 +242,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47D29CC81B2095EC00827AA8 /* avatar.obj in Resources */,
 				47D29CBB1B207E2F00827AA8 /* cube.obj in Resources */,
 				47D29CBD1B20845100827AA8 /* cube.png in Resources */,
+				47D29CC71B2095EC00827AA8 /* avatar.jpg in Resources */,
 				47D29C8B1B1F4A2600827AA8 /* Main.storyboard in Resources */,
 				47D29C901B1F4A2600827AA8 /* LaunchScreen.xib in Resources */,
 				47D29C8D1B1F4A2600827AA8 /* Images.xcassets in Resources */,
@@ -372,7 +396,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = GLBlender1/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -383,7 +409,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = GLBlender1/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

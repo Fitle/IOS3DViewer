@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "ObjParser.h"
-#import "cube.h"
+
 
 @interface ViewController ()
 {
@@ -47,7 +47,7 @@
 
 - (void) parseObj
 {
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.obj" ofType:nil];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"avatar.obj" ofType:nil];
     
     Model model = getOBJinfo((char*)[path UTF8String]);
     
@@ -136,7 +136,7 @@
     // Texture
     NSDictionary* options = @{ GLKTextureLoaderOriginBottomLeft: @YES };
     NSError* error;
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.png" ofType:nil];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"avatar.jpg" ofType:nil];
     GLKTextureInfo* texture = [GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
     
     if(texture == nil)
@@ -190,10 +190,12 @@
     
     // ModelView Matrix
     GLKMatrix4 modelViewMatrix = GLKMatrix4Identity;
-    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0.0f, 0.0f, -5.0f);
-    modelViewMatrix = GLKMatrix4RotateX(modelViewMatrix, GLKMathDegreesToRadians(45.0f));
-    modelViewMatrix = GLKMatrix4RotateY(modelViewMatrix, GLKMathDegreesToRadians(_rotate));
-    modelViewMatrix = GLKMatrix4RotateZ(modelViewMatrix, GLKMathDegreesToRadians(_rotate));
+    
+    // for avatar
+    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0.0f, 0.0f, -3.0f);
+    modelViewMatrix = GLKMatrix4RotateX(modelViewMatrix, GLKMathDegreesToRadians(-90));
+    modelViewMatrix = GLKMatrix4RotateZ(modelViewMatrix, GLKMathDegreesToRadians(45));
+    
     self.effect.transform.modelviewMatrix = modelViewMatrix;
 }
 
