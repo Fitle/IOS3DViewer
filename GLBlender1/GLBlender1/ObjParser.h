@@ -28,5 +28,47 @@ Model getOBJinfo(char* fp);
 void extractOBJdata(char* fp, float positions[][3], float texels[][2],
                     float normals[][3], int faces[][9]);
 
+const int cubeMaterials = 6;
+
+const int cubeFirsts[6] =
+{
+    0,
+    6,
+    12,
+    18,
+    24,
+    30,
+};
+
+const int cubeCounts[6] =
+{
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+};
+
+const float cubeDiffuses[6][3] =
+{
+    1, 0, 1,
+    1, 0, 0,
+    0, 0, 0.5,
+    0, 0.5, 0.5,
+    0, 0, 0,
+    0, 0, 0,
+};
+
+const float cubeSpeculars[6][3] =
+{
+    0, 0, 0, 
+    0, 0, 0, 
+    1, 1, 1, 
+    1, 1, 1, 
+    0, 1, 0, 
+    1, 1, 0, 
+};
+
 
 #endif /* defined(__GLBlender1__ObjParser__) */

@@ -52,7 +52,7 @@
 
 - (void) parseObj
 {
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"avatar.obj" ofType:nil];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.obj" ofType:nil];
     
     Model model = getOBJinfo((char*)[path UTF8String]);
     
@@ -141,7 +141,7 @@
     // Texture
     NSDictionary* options = @{ GLKTextureLoaderOriginBottomLeft: @YES };
     NSError* error;
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"avatar.jpg" ofType:nil];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.png" ofType:nil];
     GLKTextureInfo* texture = [GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
     
     if(texture == nil)
@@ -161,9 +161,6 @@
 {
     glClear(GL_COLOR_BUFFER_BIT);
     
-    // Prepare effect
-    [self.effect prepareToDraw];
-    
     // Set matrices
     [self setMatrices];
     
@@ -180,9 +177,19 @@
     glEnableVertexAttribArray(GLKVertexAttribNormal);
     glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 0, verticesNormals);
     
-    // 2
-    // Draw Model
-    glDrawArrays(GL_TRIANGLES, 0, nbVertices);
+    // Render by parts
+    for(int i=0; i<cubeMaterials; i++)
+    {
+        // Set material
+        self.effect.material.diffuseColor = GLKVector4Make(cubeDiffuses[i][0], cubeDiffuses[i][1], cubeDiffuses[i][2], 1.0f);
+        self.effect.material.specularColor = GLKVector4Make(cubeSpeculars[i][0], cubeSpeculars[i][1], cubeSpeculars[i][2], 1.0f);
+        
+        // Prepare effect
+        [self.effect prepareToDraw];
+        
+        // Draw vertices
+        glDrawArrays(GL_TRIANGLES, cubeFirsts[i], cubeCounts[i]);
+    }
 }
 
 - (void)setMatrices
@@ -197,8 +204,8 @@
     GLKMatrix4 modelViewMatrix = GLKMatrix4Identity;
     
     // for avatar
-    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0.0f, 0.0f, -0.0f);
-    modelViewMatrix = GLKMatrix4RotateX(modelViewMatrix, GLKMathDegreesToRadians(-90));
+    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0.0f, 0.0f, -2.0f);
+    modelViewMatrix = GLKMatrix4RotateX(modelViewMatrix, GLKMathDegreesToRadians(20));
     modelViewMatrix = GLKMatrix4RotateZ(modelViewMatrix, GLKMathDegreesToRadians(45));
     
     modelViewMatrix = GLKMatrix4Multiply([self.transformations getModelViewMatrix], modelViewMatrix);
