@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4703E3851B21A63200C0F34F /* Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4703E3841B21A63200C0F34F /* Transformations.m */; };
+		4703E3871B21C7CD00C0F34F /* avatar.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 4703E3861B21C7CD00C0F34F /* avatar.mtl */; };
 		47D29C821B1F4A2600827AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C811B1F4A2600827AA8 /* main.m */; };
 		47D29C851B1F4A2600827AA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C841B1F4A2600827AA8 /* AppDelegate.m */; };
 		47D29C881B1F4A2600827AA8 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C871B1F4A2600827AA8 /* ViewController.mm */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		4703E3831B21A63200C0F34F /* Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transformations.h; sourceTree = "<group>"; };
 		4703E3841B21A63200C0F34F /* Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transformations.m; sourceTree = "<group>"; };
+		4703E3861B21C7CD00C0F34F /* avatar.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = avatar.mtl; sourceTree = "<group>"; };
 		47D29C7C1B1F4A2600827AA8 /* GLBlender1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GLBlender1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47D29C801B1F4A2600827AA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47D29C811B1F4A2600827AA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		47D29CC91B2095F800827AA8 /* avatar */ = {
 			isa = PBXGroup;
 			children = (
+				4703E3861B21C7CD00C0F34F /* avatar.mtl */,
 				47D29CC51B2095EC00827AA8 /* avatar.jpg */,
 				47D29CC61B2095EC00827AA8 /* avatar.obj */,
 			);
@@ -251,6 +254,7 @@
 				47D29CBB1B207E2F00827AA8 /* cube.obj in Resources */,
 				47D29CBD1B20845100827AA8 /* cube.png in Resources */,
 				47D29CC71B2095EC00827AA8 /* avatar.jpg in Resources */,
+				4703E3871B21C7CD00C0F34F /* avatar.mtl in Resources */,
 				47D29C8B1B1F4A2600827AA8 /* Main.storyboard in Resources */,
 				47D29C901B1F4A2600827AA8 /* LaunchScreen.xib in Resources */,
 				47D29C8D1B1F4A2600827AA8 /* Images.xcassets in Resources */,
