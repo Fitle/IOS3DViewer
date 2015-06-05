@@ -66,13 +66,48 @@ Model getOBJinfo(char* fp)
     return model;
 }
 
-void extractOBJdata(char* fp, float positions[][3], float texels[][2], float normals[][3], int faces[][9])
+int getMTLinfo(char* fp)
+{
+    int m = 0;
+    
+    // Open MTL file
+    ifstream inMTL;
+    inMTL.open(fp);
+    if(!inMTL.good())
+    {
+        cout << "ERROR OPENING MTL FILE" << endl;
+        exit(1);
+    }
+    
+    // Read MTL file
+    while(!inMTL.eof())
+    {
+        string line;
+        getline(inMTL, line);
+        string type = line.substr(0,2);
+        
+        if(type.compare("ne") == 0)
+            m++;
+    }
+    
+    // Close MTL file
+    inMTL.close();
+    
+    return m;
+}
+
+
+
+void extractOBJdata(char* fp, float positions[][3], float texels[][2], float normals[][3], int faces[][10], string* materials, int m)
 {
     // Counters
     int p = 0;
     int t = 0;
     int n = 0;
     int f = 0;
+    
+    // Index
+    int mtl = 0;
     
     // Open OBJ file
     ifstream inOBJ;
@@ -90,21 +125,32 @@ void extractOBJdata(char* fp, float positions[][3], float texels[][2], float nor
         getline(inOBJ, line);
         string type = line.substr(0,2);
         
+        // Material
+        if(type.compare("us") == 0)
+        {
+            // Extract token
+            string l = "usemtl ";
+            string material = line.substr(l.size());
+            
+            for(int i=0; i<m; i++)
+            {
+                if(material.compare(materials[i]) == 0)
+                    mtl = i;
+            }
+        }
+        
         // Positions
         if(type.compare("v ") == 0)
         {
-            // 1
             // Copy line for parsing
             char* l = new char[line.size()+1];
             memcpy(l, line.c_str(), line.size()+1);
             
-            // 2
             // Extract tokens
             strtok(l, " ");
             for(int i=0; i<3; i++)
                 positions[p][i] = atof(strtok(NULL, " "));
             
-            // 3
             // Wrap up
             delete[] l;
             p++;
@@ -148,19 +194,87 @@ void extractOBJdata(char* fp, float positions[][3], float texels[][2], float nor
             for(int i=0; i<9; i++)
                 faces[f][i] = atof(strtok(NULL, " /"));
             
+            // Append material
+            faces[f][9] = mtl;
+            
             delete[] l;
             f++;
-        }    }
+        }
+    }
     
     // Close OBJ file
     inOBJ.close();
-    
-    cout << "Model Data" << endl;
-    cout << "P1: " << positions[0][0] << "x " << positions[0][1] << "y " << positions[0][2] << "z" << endl;
-    cout << "T1: " << texels[0][0] << "u " << texels[0][1] << "v " << endl;
-    cout << "N1: " << normals[0][0] << "x " << normals[0][1] << "y " << normals[0][2] << "z" << endl;
-    cout << "F1v1: " << faces[0][0] << "p " << faces[0][1] << "t " << faces[0][2] << "n" << endl;
+
 }
+
+void extractMTLdata(char* fp, string* materials, float diffuses[], float speculars[])
+{
+    // Counters
+    int m = 0;
+    int d = 0;
+    int s = 0;
+    
+    // Open MTL file
+    ifstream inMTL;
+    inMTL.open(fp);
+    if(!inMTL.good())
+    {
+        cout << "ERROR OPENING MTL FILE" << endl;
+        exit(1);
+    }
+    
+    // Read MTL file
+    while(!inMTL.eof())
+    {
+        string line;
+        getline(inMTL, line);
+        string type = line.substr(0,2);
+        
+        // Names
+        if(type.compare("ne") == 0)
+        {
+            // Extract token
+            string l = "newmtl ";
+            materials[m] = line.substr(l.size());
+            m++;
+        }
+        
+        // Diffuses
+        else if(type.compare("Kd") == 0)
+        {
+            // Copy line for parsing
+            char* l = new char[line.size()+1];
+            memcpy(l, line.c_str(), line.size()+1);
+            
+            // Extract tokens
+            strtok(l, " ");
+            for(int i=0; i<3; i++)
+                diffuses[3*d+i] = atof(strtok(NULL, " "));
+            
+            // Wrap up
+            delete[] l;
+            d++;
+        }
+        
+        // Speculars
+        else if(type.compare("Ks") == 0)
+        {
+            char* l = new char[line.size()+1];
+            memcpy(l, line.c_str(), line.size()+1);
+            
+            strtok(l, " ");
+            for(int i=0; i<3; i++)
+                speculars[3*s+i] = atof(strtok(NULL, " "));
+            
+            delete[] l;
+            s++;
+        }
+    }
+    
+    // Close MTL file
+    inMTL.close();
+}
+
 
 
 

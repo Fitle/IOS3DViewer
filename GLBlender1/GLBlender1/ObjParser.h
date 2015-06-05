@@ -10,6 +10,7 @@
 #define __GLBlender1__ObjParser__
 
 #include <stdio.h>
+#include <iostream>
 
 
 // Model Structure
@@ -20,55 +21,16 @@ typedef struct Model
     int texels;
     int normals;
     int faces;
+    int materials;
 }
 Model;
 
 Model getOBJinfo(char* fp);
 
-void extractOBJdata(char* fp, float positions[][3], float texels[][2],
-                    float normals[][3], int faces[][9]);
+int getMTLinfo(char* fp);
 
-const int cubeMaterials = 6;
+void extractMTLdata(char* fp, std::string* materials, float diffuses[], float speculars[]);
 
-const int cubeFirsts[6] =
-{
-    0,
-    6,
-    12,
-    18,
-    24,
-    30,
-};
-
-const int cubeCounts[6] =
-{
-    6,
-    6,
-    6,
-    6,
-    6,
-    6,
-};
-
-const float cubeDiffuses[6][3] =
-{
-    1, 0, 1,
-    1, 0, 0,
-    0, 0, 0.5,
-    0, 0.5, 0.5,
-    0, 0, 0,
-    0, 0, 0,
-};
-
-const float cubeSpeculars[6][3] =
-{
-    0, 0, 0, 
-    0, 0, 0, 
-    1, 1, 1, 
-    1, 1, 1, 
-    0, 1, 0, 
-    1, 1, 0, 
-};
-
+void extractOBJdata(char* fp, float positions[][3], float texels[][2], float normals[][3], int faces[][10], std::string* materials, int m);
 
 #endif /* defined(__GLBlender1__ObjParser__) */

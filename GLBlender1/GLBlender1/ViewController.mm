@@ -9,14 +9,21 @@
 #import "ViewController.h"
 #import "ObjParser.h"
 #import "Transformations.h"
+#import <iostream>
 
 
 @interface ViewController ()
 {
     int nbVertices;
+    int nbMaterials;
     float* verticePositions;
     float* verticesTexels;
     float* verticesNormals;
+    float* diffuses;                 // RGB
+    float* speculars;                // RGB
+    int* firsts;	// Starting vertex
+    int* counts;	// Number of vertices
+
     float   _rotate;
 }
 
@@ -52,9 +59,13 @@
 
 - (void) parseObj
 {
+    // Files
     NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.obj" ofType:nil];
+    NSString* mtlPath = [[NSBundle mainBundle] pathForResource:@"cube.mtl" ofType:nil];
     
+    // Model Info
     Model model = getOBJinfo((char*)[path UTF8String]);
+    nbMaterials = getMTLinfo((char*)[mtlPath UTF8String]);
     
     nbVertices = model.vertices;
     
@@ -62,14 +73,24 @@
     float (*positions)[3] = new float[model.positions][3];    // XYZ :
     float (*texels)[2] = new float[model.texels][2];          // UV
     float (*normals)[3]= new float[model.normals][3];        // XYZ
-    int (*faces)[9] = new int[model.faces][9];              // PTN PTN PTN
+    int (*faces)[10] = new int[model.faces][10];              // PTN PTN PTN M
     
-    extractOBJdata((char*)[path UTF8String], positions, texels, normals, faces);
+    using namespace std;
+    string* materials = new string[nbMaterials];    // Name
+    diffuses = new float[nbMaterials*3];                 // RGB
+    speculars = new float[nbMaterials*3];                // RGB
+    extractMTLdata((char*)[mtlPath UTF8String], materials, diffuses, speculars);
+    extractOBJdata((char*)[path UTF8String], positions, texels, normals, faces, materials,
+                   nbMaterials);
+    
+    firsts = new int[nbMaterials]();	// Starting vertex
+    counts= new int[nbMaterials]();	// Number of vertices
     
     verticePositions = new float[nbVertices*3];
     verticesNormals = new float[nbVertices*3];
     verticesTexels= new float[nbVertices*2];
     
+    // get vertice positions and counts
     for(int i=0; i<model.faces; i++)
     {
         // 3
@@ -90,8 +111,18 @@
         verticePositions[9*i+6] =  positions[vC][0] ;
         verticePositions[9*i+7] = positions[vC][1] ;
         verticePositions[9*i+8] = positions[vC][2] ;
+        
+        for(int j=0; j<nbMaterials; j++)
+        {
+            if(faces[i][9] == j)
+            {
+                counts[j] += 3;
+            }
+        }
+
     }
     
+    // get vertice texels
     for(int i=0; i<model.faces; i++)
     {
         int vtA = faces[i][1] - 1;
@@ -108,6 +139,7 @@
         verticesTexels[6*i+5]= texels[vtC][1];
     }
     
+    // get vertice normals
     for(int i=0; i<model.faces; i++)
     {
         int vnA = faces[i][2] - 1;
@@ -127,7 +159,14 @@
         verticesNormals[9*i+8] = normals[vnC][2];
     }
 
-
+    // get firsts
+    for(int i=0; i<nbMaterials; i++)
+    {
+        if(i == 0)
+            firsts[i] = 0;
+        else
+            firsts[i] = firsts[i-1]+counts[i-1];
+    }
 
     
     NSLog(@"con meo");
@@ -178,17 +217,17 @@
     glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 0, verticesNormals);
     
     // Render by parts
-    for(int i=0; i<cubeMaterials; i++)
+    for(int i=0; i<nbMaterials; i++)
     {
-        // Set material
-        self.effect.material.diffuseColor = GLKVector4Make(cubeDiffuses[i][0], cubeDiffuses[i][1], cubeDiffuses[i][2], 1.0f);
-        self.effect.material.specularColor = GLKVector4Make(cubeSpeculars[i][0], cubeSpeculars[i][1], cubeSpeculars[i][2], 1.0f);
+        self.effect.material.diffuseColor = GLKVector4Make(diffuses[3*i], diffuses[3*i+1], diffuses[3*i+2], 1.0f);
+        self.effect.material.specularColor = GLKVector4Make(speculars[3*i+0], speculars[3*i+1], speculars[3*i+2], 1.0f);
+
         
         // Prepare effect
         [self.effect prepareToDraw];
         
         // Draw vertices
-        glDrawArrays(GL_TRIANGLES, cubeFirsts[i], cubeCounts[i]);
+        glDrawArrays(GL_TRIANGLES, firsts[i], counts[i]);
     }
 }
 
