@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ObjParser.h"
+#import "Transformations.h"
 
 
 @interface ViewController ()
@@ -20,6 +21,7 @@
 }
 
 @property (strong, nonatomic) GLKBaseEffect* effect;
+@property (strong, nonatomic) Transformations* transformations;
 
 @end
 @implementation ViewController
@@ -28,6 +30,9 @@
     [super viewDidLoad];
     
     [self parseObj];
+    
+    // Initialize transformations
+    self.transformations = [[Transformations alloc] initWithDepth:5.0f Scale:2.0f Translation:GLKVector2Make(0.0f, 0.0f) Rotation:GLKVector3Make(0.0f, 0.0f, 0.0f)];
     
     // Set up context
     EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -192,9 +197,11 @@
     GLKMatrix4 modelViewMatrix = GLKMatrix4Identity;
     
     // for avatar
-    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0.0f, 0.0f, -3.0f);
+    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, 0.0f, 0.0f, -0.0f);
     modelViewMatrix = GLKMatrix4RotateX(modelViewMatrix, GLKMathDegreesToRadians(-90));
     modelViewMatrix = GLKMatrix4RotateZ(modelViewMatrix, GLKMathDegreesToRadians(45));
+    
+    modelViewMatrix = GLKMatrix4Multiply([self.transformations getModelViewMatrix], modelViewMatrix);
     
     self.effect.transform.modelviewMatrix = modelViewMatrix;
 }
@@ -208,6 +215,54 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Gestures
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // Begin transformations
+    [self.transformations start];
+}
+
+
+- (IBAction)pan:(UIPanGestureRecognizer *)sender {
+    // Pan (1 Finger)
+    if((sender.numberOfTouches == 1) &&
+       ((self.transformations.state == S_NEW) || (self.transformations.state == S_TRANSLATION)))
+    {
+        CGPoint translation = [sender translationInView:sender.view];
+        float x = translation.x/sender.view.frame.size.width;
+        float y = translation.y/sender.view.frame.size.height;
+        [self.transformations translate:GLKVector2Make(x, y) withMultiplier:5.0f];
+    }
+    
+    // Pan (2 Fingers)
+    else if((sender.numberOfTouches == 2) &&
+            ((self.transformations.state == S_NEW) || (self.transformations.state == S_ROTATION)))
+    {
+        const float m = GLKMathDegreesToRadians(0.5f);
+        CGPoint rotation = [sender translationInView:sender.view];
+        [self.transformations rotate:GLKVector3Make(rotation.x, rotation.y, 0.0f) withMultiplier:m];
+    }
+
+}
+
+- (IBAction)pinch:(UIPinchGestureRecognizer *)sender {
+    // Pinch
+    if((self.transformations.state == S_NEW) || (self.transformations.state == S_SCALE))
+    {
+        float scale = [sender scale];
+        [self.transformations scale:scale];
+    }
+}
+- (IBAction)rotation:(UIRotationGestureRecognizer *)sender {
+    // Rotation
+    if((self.transformations.state == S_NEW) || (self.transformations.state == S_ROTATION))
+    {
+        float rotation = [sender rotation];
+        [self.transformations rotate:GLKVector3Make(0.0f, 0.0f, rotation) withMultiplier:1.0f];
+    }
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4703E3851B21A63200C0F34F /* Transformations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4703E3841B21A63200C0F34F /* Transformations.m */; };
 		47D29C821B1F4A2600827AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C811B1F4A2600827AA8 /* main.m */; };
 		47D29C851B1F4A2600827AA8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C841B1F4A2600827AA8 /* AppDelegate.m */; };
 		47D29C881B1F4A2600827AA8 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C871B1F4A2600827AA8 /* ViewController.mm */; };
@@ -34,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4703E3831B21A63200C0F34F /* Transformations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transformations.h; sourceTree = "<group>"; };
+		4703E3841B21A63200C0F34F /* Transformations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transformations.m; sourceTree = "<group>"; };
 		47D29C7C1B1F4A2600827AA8 /* GLBlender1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GLBlender1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47D29C801B1F4A2600827AA8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47D29C811B1F4A2600827AA8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				47D29C7F1B1F4A2600827AA8 /* Supporting Files */,
 				47D29CB71B20782C00827AA8 /* ObjParser.mm */,
 				47D29CB81B20782C00827AA8 /* ObjParser.h */,
+				4703E3831B21A63200C0F34F /* Transformations.h */,
+				4703E3841B21A63200C0F34F /* Transformations.m */,
 			);
 			path = GLBlender1;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4703E3851B21A63200C0F34F /* Transformations.m in Sources */,
 				47D29C881B1F4A2600827AA8 /* ViewController.mm in Sources */,
 				47D29CB91B20782C00827AA8 /* ObjParser.mm in Sources */,
 				47D29C851B1F4A2600827AA8 /* AppDelegate.m in Sources */,
