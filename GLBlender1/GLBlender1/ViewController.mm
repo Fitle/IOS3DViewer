@@ -180,7 +180,7 @@
     // Texture
     NSDictionary* options = @{ GLKTextureLoaderOriginBottomLeft: @YES };
     NSError* error;
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube.png" ofType:nil];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"cube_decal.png" ofType:nil];
     GLKTextureInfo* texture = [GLKTextureLoader textureWithContentsOfFile:path options:options error:&error];
     
     if(texture == nil)
