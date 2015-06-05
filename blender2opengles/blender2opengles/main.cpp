@@ -307,7 +307,7 @@ void writeCnormals(string fp, string name, Model model, int faces[][9], float no
     outC.close();
 }
 
-int main(int argc, const char * argv[]) {
+int main2(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
     

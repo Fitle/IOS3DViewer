@@ -54,10 +54,10 @@
     nbVertices = model.vertices;
     
     // Model Data
-    float positions[model.positions][3];    // XYZ
-    float texels[model.texels][2];          // UV
-    float normals[model.normals][3];        // XYZ
-    int faces[model.faces][9];              // PTN PTN PTN
+    float (*positions)[3] = new float[model.positions][3];    // XYZ :
+    float (*texels)[2] = new float[model.texels][2];          // UV
+    float (*normals)[3]= new float[model.normals][3];        // XYZ
+    int (*faces)[9] = new int[model.faces][9];              // PTN PTN PTN
     
     extractOBJdata((char*)[path UTF8String], positions, texels, normals, faces);
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4703E3821B219E0700C0F34F /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4703E3811B219E0700C0F34F /* test.cpp */; };
 		47D29C6D1B1F417900827AA8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47D29C6C1B1F417900827AA8 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4703E3811B219E0700C0F34F /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
 		47D29C691B1F417900827AA8 /* blender2opengles */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = blender2opengles; sourceTree = BUILT_PRODUCTS_DIR; };
 		47D29C6C1B1F417900827AA8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,6 +43,7 @@
 		47D29C601B1F417900827AA8 = {
 			isa = PBXGroup;
 			children = (
+				4703E3811B219E0700C0F34F /* test.cpp */,
 				47D29C6B1B1F417900827AA8 /* blender2opengles */,
 				47D29C6A1B1F417900827AA8 /* Products */,
 			);
@@ -119,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47D29C6D1B1F417900827AA8 /* main.cpp in Sources */,
+				4703E3821B219E0700C0F34F /* test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +239,7 @@
 				47D29C721B1F417900827AA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
